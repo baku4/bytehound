@@ -5,7 +5,7 @@ use bytehound_res_to_csv::{get_data, write_data_to_stdout};
 fn main() {
     let args: Vec<String> = env::args().collect();
     eprintln!("Bytehound result(.dat) to csv format");
-    eprintln!(" - format: time(ns), size");
+    eprintln!(" - format: time(us), size");
     eprintln!(" - bin path: {}", args[0]);
     eprintln!(" - input bytehound dat: {}", args[1]);
 

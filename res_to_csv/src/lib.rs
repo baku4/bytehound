@@ -13,32 +13,32 @@ pub fn get_data(path: &PathBuf) -> Data {
 pub fn write_data_to_stdout(data: Data) {
     let mut stdout = io::stdout();
 
-    let init_time = us_of_timestamp(data.initial_timestamp());
+    let init_time = data.initial_timestamp();
 
     for op in data.operations() {
         match op {
             Operation::Allocation { allocation, .. } => {
                 let size = size_of_allocation(&allocation);
-                let td = time_delta_of_allocation(&allocation, init_time);
+                let td = time_delta_of_allocation(&allocation, &init_time);
                 let line = format!("{},{}\n", td, size);
                 stdout.write(line.as_bytes()).unwrap();
             },
             Operation::Deallocation { allocation, .. } => {
                 let size = size_of_allocation(&allocation);
-                let td = time_delta_of_allocation(&allocation, init_time);
+                let td = time_delta_of_deallocation(&allocation, &init_time);
                 let line = format!("{},-{}\n", td, size);
                 stdout.write(line.as_bytes()).unwrap();
             },
             Operation::Reallocation { old_allocation, new_allocation, .. } => {
                 {
                     let size = size_of_allocation(&old_allocation);
-                    let td = time_delta_of_allocation(&old_allocation, init_time);
+                    let td = time_delta_of_deallocation(&old_allocation, &init_time);
                     let line = format!("{},-{}\n", td, size);
                     stdout.write(line.as_bytes()).unwrap();
                 }
                 {
                     let size = size_of_allocation(&new_allocation);
-                    let td = time_delta_of_allocation(&new_allocation, init_time);
+                    let td = time_delta_of_allocation(&new_allocation, &init_time);
                     let line = format!("{},{}\n", td, size);
                     stdout.write(line.as_bytes()).unwrap();
                 }
@@ -47,13 +47,18 @@ pub fn write_data_to_stdout(data: Data) {
     }
 }
 
-fn us_of_timestamp(timestamp: Timestamp) -> u64 {
-    timestamp.as_usecs()
-}
-
 fn size_of_allocation(allocation: &Allocation) -> u64 {
     allocation.size + allocation.extra_usable_space as u64
 }
-fn time_delta_of_allocation(allocation: &Allocation, time: u64) -> u64 {
-    us_of_timestamp(allocation.timestamp) - time
+fn time_delta_of_allocation(allocation: &Allocation, init_timestamp: &Timestamp) -> u64 {
+    let d = allocation.timestamp - init_timestamp.clone();
+    us_of_timestamp(d)
+}
+fn time_delta_of_deallocation(allocation: &Allocation, init_timestamp: &Timestamp) -> u64 {
+    let deallocation = allocation.deallocation.as_ref().unwrap();
+    let d = allocation.timestamp + deallocation.timestamp.clone() - init_timestamp.clone();
+    us_of_timestamp(d)
+}
+fn us_of_timestamp(timestamp: Timestamp) -> u64 {
+    timestamp.as_usecs()
 }
