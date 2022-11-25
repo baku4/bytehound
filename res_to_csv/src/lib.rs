@@ -56,7 +56,7 @@ fn time_delta_of_allocation(allocation: &Allocation, init_timestamp: &Timestamp)
 }
 fn time_delta_of_deallocation(allocation: &Allocation, init_timestamp: &Timestamp) -> u64 {
     let deallocation = allocation.deallocation.as_ref().unwrap();
-    let d = allocation.timestamp + deallocation.timestamp.clone() - init_timestamp.clone();
+    let d = deallocation.timestamp.clone() - init_timestamp.clone();
     us_of_timestamp(d)
 }
 fn us_of_timestamp(timestamp: Timestamp) -> u64 {
