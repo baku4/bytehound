@@ -1,6 +1,34 @@
 use std::{path::PathBuf, fs::File, io::{self, Write}, fmt::format};
 
-use cli_core::{Data, Loader, Allocation, Timestamp, Operation};
+use cli_core::{
+    parse_events,
+    Data, Loader, Allocation, Timestamp, Operation,
+    event::Event,
+};
+
+pub fn process(path: &PathBuf) {
+    eprintln!(" - Get event stream");
+    let file = File::open(path).unwrap();
+    let (header, event_stream) = parse_events(file).unwrap();
+    
+    eprintln!(" - Process events");
+    for event in event_stream {
+        let event = event.unwrap();
+        process_event(event)
+    }
+}
+
+pub fn process_event(event: Event) {
+    //
+}
+
+pub fn get_data(path: &PathBuf) -> Data {
+    let file = File::open(path).unwrap();
+    let debug_symbols = vec![path.clone()];
+    let data = Loader::load_from_stream( file, debug_symbols ).unwrap();
+
+    data
+}
 
 pub fn get_data(path: &PathBuf) -> Data {
     let file = File::open(path).unwrap();
