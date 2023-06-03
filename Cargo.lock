@@ -353,9 +353,9 @@ dependencies = [
 
 [[package]]
 name = "ahash"
-version = "0.8.0"
+version = "0.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57e6e951cfbb2db8de1828d49073a113a29fd7117b1596caa781a258c7e38d72"
+checksum = "2c99f64d1e06488f620f932677e24bc6e2897582980441ae90a671415bd7ec2f"
 dependencies = [
  "cfg-if 1.0.0",
  "getrandom 0.2.7",
@@ -567,7 +567,7 @@ dependencies = [
 name = "bytehound-preload"
 version = "0.11.0"
 dependencies = [
- "ahash 0.8.0",
+ "ahash 0.8.3",
  "common",
  "fast_range_map",
  "glob 0.2.11",
@@ -591,6 +591,7 @@ dependencies = [
 name = "bytehound_res_to_csv"
 version = "0.1.0"
 dependencies = [
+ "ahash 0.8.3",
  "cli-core",
 ]
 
@@ -1311,7 +1312,7 @@ version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "33ff8ae62cd3a9102e5637afc8452c55acf3844001bd5374e0b0bd7b6616c038"
 dependencies = [
- "ahash 0.8.0",
+ "ahash 0.8.3",
 ]
 
 [[package]]
@@ -1806,9 +1807,9 @@ dependencies = [
 
 [[package]]
 name = "once_cell"
-version = "1.13.0"
+version = "1.17.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "18a6dbe30758c9f83eb00cbea4ac95966305f5a7772f3f42ebfc7fc7eddbd8e1"
+checksum = "9670a07f94779e00908f3e686eab508878ebb390ba6e604d3a284c00e8d0487b"
 
 [[package]]
 name = "oorandom"

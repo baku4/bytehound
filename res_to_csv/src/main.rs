@@ -1,6 +1,6 @@
 use std::{env, path::PathBuf};
 
-use bytehound_res_to_csv::{get_data, write_data_to_stdout};
+use bytehound_res_to_csv::process;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -10,7 +10,5 @@ fn main() {
     eprintln!(" - input bytehound dat: {}", args[1]);
 
     let input_file = PathBuf::from(args[1].clone());
-    let data = get_data(&input_file);
-
-    write_data_to_stdout(data);
+    process(&input_file);
 }

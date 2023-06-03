@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 cli-core = { path = "../cli-core" }
+ahash = "0.8.3"
